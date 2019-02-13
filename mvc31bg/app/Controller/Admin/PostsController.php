@@ -35,13 +35,16 @@ class PostsController extends AppController{
 
     public function edit(){
         if (!empty($_POST)) {
-            $result = $this->Post->update($_GET['id'], [
+            if(isset($_GET['id'])){
+                $post_id = $_GET['id'];
+                $result = $this->Post->update($post_id, [
                 'titre' => $_POST['titre'],
                 'contenu' => $_POST['contenu'],
                 'category_id' => $_POST['category_id']
-            ]);
-            if($result){
-                return $this->index();
+                ]);
+                if($result){
+                    return $this->index();
+                }
             }
         }
         $post = $this->Post->find($_GET['id']);
